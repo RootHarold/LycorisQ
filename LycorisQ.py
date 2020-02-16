@@ -14,7 +14,15 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log
 
 class Agent:
     def __init__(self, config):
-        pass
+        if config is not None:
+            self.__check_config(config)
+            self.__config = config
+            self.__lie = Lycoris(capacity=config["capacity"], inputDim=config["state_dim"],
+                                 outputDim=config["action_dim"], mode="predict")
+            self.__lie.setMutateOdds(0)
+            self.__lie.preheat(config["nodes"], config["connections"], config["depths"])
+            self.__mapping = {}
+            self.__flag = True
 
     def train(self, data):
         pass
@@ -33,14 +41,15 @@ class Agent:
         pass
 
     def set_lr(self, learning_rate):
-        pass
+        self.__lie.setLR(learning_rate)
 
     def set_workers(self, workers):
-        pass
+        self.__lie.setCpuCores(num=workers)
 
     @staticmethod
     def version():
-        pass
+        lycoris_version = Lycoris.version()
+        return "LycorisQ 1.0.0 By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
 
     @staticmethod
     def __check_config(config):
