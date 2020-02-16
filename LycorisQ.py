@@ -16,6 +16,12 @@ class Agent:
     def __init__(self, config):
         pass
 
+    def train(self, data):
+        pass
+
+    def evaluate(self, data):
+        pass
+
     def save(self, path1, path2):
         pass
 
