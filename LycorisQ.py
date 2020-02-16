@@ -7,6 +7,7 @@ in the LICENSE file.
 
 from LycorisNet import Lycoris
 from LycorisNet import loadModel
+import json
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=logging.INFO)
@@ -31,7 +32,14 @@ class Agent:
         pass
 
     def save(self, path1, path2):
-        pass
+        self.__lie.saveModel(path=path1)
+        json_info = json.dumps(self.__config, indent=4)
+        f = open(path2, 'w')
+        f.write(json_info)
+        f.close()
+
+        if self.__config["verbose"]:
+            logging.info("Model saved successfully.")
 
     @staticmethod
     def load(path1, path2):
