@@ -70,7 +70,10 @@ class Agent:
                 logging.info("Epoch " + str(i + 1) + " : " + str(self.__lie.getLoss()))
 
     def evaluate(self, data):
-        pass
+        if np.array(data).ndim == 1:
+            data = [data]
+
+        return self.__lie.computeBatch(data)
 
     def save(self, path1, path2):
         self.__lie.saveModel(path=path1)
