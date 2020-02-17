@@ -87,10 +87,28 @@ class Agent:
 
     @staticmethod
     def load(path1, path2):
-        pass
+        l_q = Agent(None)
+        l_q.__flag = False
+
+        l_q.__lie = loadModel(path1, capacity=1)
+
+        f = open(path2, 'r')
+        json_info = f.read()
+        f.close()
+
+        config = json.loads(json_info)
+        config["capacity"] = 1
+        config["evolution"] = 0
+        l_q.__check_config(config)
+        l_q.__config = config
+        if l_q.__config["verbose"]:
+            logging.info("Model imported successfully.")
+
+        return l_q
 
     def set_config(self, config):
-        pass
+        self.__check_config(config)
+        self.__config = config
 
     def set_lr(self, learning_rate):
         self.__lie.setLR(learning_rate)
