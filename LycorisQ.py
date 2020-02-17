@@ -7,8 +7,11 @@ in the LICENSE file.
 
 from LycorisNet import Lycoris
 from LycorisNet import loadModel
-import json
+import math
+import random
+import numpy as np
 import logging
+import json
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=logging.INFO)
 
@@ -22,11 +25,49 @@ class Agent:
                                  outputDim=config["action_dim"], mode="predict")
             self.__lie.setMutateOdds(0)
             self.__lie.preheat(config["nodes"], config["connections"], config["depths"])
-            self.__mapping = {}
             self.__flag = True
 
     def train(self, data):
-        pass
+        if np.array(data).ndim == 1:
+            data = [data]
+
+        flag = True
+        if self.__flag:
+            self.__flag = False
+        else:
+            flag = False
+
+        data_copy = data.copy()
+        batch = math.ceil(len(data) / float(self.__config["batch_size"]))
+        remainder = len(data) % self.__config["batch_size"]
+
+        for _ in range(remainder):
+            data_copy.append(random.choice(data))
+
+        for i in range(self.__config["epoch"]):
+            random.shuffle(data_copy)
+            temp1 = [None] * self.__config["batch_size"]
+            temp2 = [None] * self.__config["batch_size"]
+            pos = 0
+
+            for j in range(batch):
+                for k in range(self.__config["batch_size"]):
+                    temp1[k], temp2[k] = self.__process(data_copy[pos])
+                    pos = pos + 1
+
+                if flag:
+                    if i * batch + j == self.__config["evolution"]:
+                        self.__lie.enrich()
+
+                    if i * batch + j < self.__config["evolution"]:
+                        self.__lie.fitAll(temp1, temp2)
+                    else:
+                        self.__lie.fit(temp1, temp2)
+                else:
+                    self.__lie.fit(temp1, temp2)
+
+            if self.__config["verbose"]:
+                logging.info("Epoch " + str(i + 1) + " : " + str(self.__lie.getLoss()))
 
     def evaluate(self, data):
         pass
@@ -62,3 +103,16 @@ class Agent:
     @staticmethod
     def __check_config(config):
         pass
+
+    def __process(self, data):
+        action = data[0]
+        reward = data[1]
+        current_state = data[2]
+        next_state = data[3]
+
+        Q = self.__lie.compute(current_state)
+        delta = (reward + self.__config["gamma"] * max(self.__lie.compute(next_state)) - Q[action]) * self.__config[
+            "alpha"]
+        Q[action] = Q[action] + delta
+
+        return current_state, Q
