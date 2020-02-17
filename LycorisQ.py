@@ -123,7 +123,22 @@ class Agent:
 
     @staticmethod
     def __check_config(config):
-        pass
+        keys = ["capacity", "state_dim", "action_dim", "nodes", "connections", "depths", "batch_size", "epoch"]
+        for item in keys:
+            if item not in config:
+                raise Exception("Invalid configuration.")
+
+        if "evolution" not in config:
+            config["evolution"] = 0
+
+        if "verbose" not in config:
+            config["verbose"] = False
+
+        if "alpha" not in config:
+            config["alpha"] = 0.01
+
+        if "gamma" not in config:
+            config["gamma"] = 0.5
 
     def __process(self, data):
         action = data[0]
