@@ -10,6 +10,7 @@ from LycorisNet import loadModel
 import math
 import random
 import numpy as np
+from collections import deque
 import logging
 import json
 
@@ -26,6 +27,7 @@ class Agent:
             self.__lie.setMutateOdds(0)
             self.__lie.preheat(config["nodes"], config["connections"], config["depths"])
             self.__flag = True
+            self.__memory = deque(maxlen=config["memory"])
 
     def train(self, data):
         if np.array(data).ndim == 1:
@@ -101,6 +103,7 @@ class Agent:
         config["evolution"] = 0
         l_q.__check_config(config)
         l_q.__config = config
+        l_q.__memory = deque(maxlen=config["memory"])
         if l_q.__config["verbose"]:
             logging.info("Model imported successfully.")
 
@@ -123,7 +126,8 @@ class Agent:
 
     @staticmethod
     def __check_config(config):
-        keys = ["capacity", "state_dim", "action_dim", "nodes", "connections", "depths", "batch_size", "epoch"]
+        keys = ["capacity", "state_dim", "action_dim", "nodes", "connections", "depths", "batch_size", "epoch",
+                "memory"]
         for item in keys:
             if item not in config:
                 raise Exception("Invalid configuration.")
