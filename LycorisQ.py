@@ -7,7 +7,6 @@ in the LICENSE file.
 
 from LycorisNet import Lycoris
 from LycorisNet import loadModel
-import math
 import random
 import numpy as np
 from collections import deque
@@ -125,21 +124,21 @@ class Agent:
         if "verbose" not in config:
             config["verbose"] = False
 
-        if "alpha" not in config:
-            config["alpha"] = 0.01
-
         if "gamma" not in config:
-            config["gamma"] = 0.5
+            config["gamma"] = 0.9
 
     def __process(self, data):
         action = data[0]
         reward = data[1]
         current_state = data[2]
         next_state = data[3]
+        done = data[4]
 
         Q = self.__lie.compute(current_state)
-        delta = (reward + self.__config["gamma"] * max(self.__lie.compute(next_state)) - Q[action]) * self.__config[
-            "alpha"]
-        Q[action] = Q[action] + delta
+        if done:
+            target = reward
+        else:
+            target = reward + self.__config["gamma"] * np.amax(self.__lie.compute(next_state))
+        Q[action] = target
 
         return current_state, Q
