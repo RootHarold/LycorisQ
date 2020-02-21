@@ -3,8 +3,8 @@ import gym
 import random
 import numpy as np
 
-config = {"capacity": 64, "state_dim": 4, "action_dim": 2, "nodes": 36, "connections": 120, "depths": 3,
-          "batch_size": 48, "memory": 200, "evolution": 20}
+config = {"capacity": 64, "state_dim": 4, "action_dim": 2, "nodes": 100, "connections": 500, "depths": 3,
+          "batch_size": 48, "memory": 2000, "evolution": 20}
 agent = Agent(config)
 
 env = gym.make('CartPole-v0')
@@ -12,11 +12,11 @@ e = 0.5
 
 for i_episode in range(5000):
     observation = env.reset()
-    for t in range(100):
+    for t in range(300):
         # env.render()
         current_state = observation
 
-        if random.random() < max(e, 0.01):
+        if random.random() < max(e, 0.05):
             action = env.action_space.sample()
         else:
             ret = agent.evaluate(current_state)[0]

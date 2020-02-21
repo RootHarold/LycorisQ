@@ -37,6 +37,28 @@ class Agent:
 
         if self.__config["batch_size"] <= len(self.__memory):
             sample = random.sample(self.__memory, self.__config["batch_size"])
+
+            temp1 = [None] * self.__config["batch_size"]
+            temp2 = [None] * self.__config["batch_size"]
+            for i in range(self.__config["batch_size"]):
+                temp1[i], temp2[i] = self.__process(sample[i])
+
+            if self.__count == self.__config["evolution"]:
+                self.__lie.enrich()
+
+            if self.__count < self.__config["evolution"]:
+                self.__lie.fitAll(temp1, temp2)
+            else:
+                self.__lie.fit(temp1, temp2)
+
+            self.__count = self.__count + 1
+
+            if self.__config["verbose"]:
+                logging.info("Epoch " + self.__count + " : " + str(self.__lie.getLoss()))
+
+        '''
+        if self.__config["batch_size"] <= len(self.__memory):
+            sample = random.sample(self.__memory, self.__config["batch_size"])
         else:
             sample = random.choices(self.__memory, k=self.__config["batch_size"])
 
@@ -57,6 +79,7 @@ class Agent:
 
         if self.__config["verbose"]:
             logging.info("Epoch " + self.__count + " : " + str(self.__lie.getLoss()))
+        '''
 
     def evaluate(self, data):
         if np.array(data).ndim == 1:
@@ -138,7 +161,7 @@ class Agent:
         if done:
             target = reward
         else:
-            target = reward + self.__config["gamma"] * np.amax(self.__lie.compute(next_state))
+            target = reward + self.__config["gamma"] * np.max(self.__lie.compute(next_state))
         Q[action] = target
 
         return current_state, Q
