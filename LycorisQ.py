@@ -110,7 +110,7 @@ class Agent:
     @staticmethod
     def version():
         lycoris_version = Lycoris.version()
-        return "LycorisQ 1.0.0 By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
+        return "LycorisQ 0.9.18-Beta By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
 
     @staticmethod
     def __check_config(config):
