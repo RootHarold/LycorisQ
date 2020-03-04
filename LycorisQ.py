@@ -65,6 +65,13 @@ class Agent:
         return self.__lie.computeBatch(data)
 
     def save(self, path1, path2):
+        """Save the model and related configurations.
+
+        :param path1: The path to store the model.
+        :param path2: The path to store the configurations.
+        :return: None.
+        """
+
         self.__lie.saveModel(path=path1)
         json_info = json.dumps(self.__config, indent=4)
         f = open(path2, 'w')
@@ -76,6 +83,13 @@ class Agent:
 
     @staticmethod
     def load(path1, path2):
+        """Import pre-trained models and related configurations.
+
+        :param path1: The path to import the model.
+        :param path2: The path to import the configurations.
+        :return: None.
+        """
+
         l_q = Agent(None)
         l_q.__count = 0
 
@@ -98,6 +112,12 @@ class Agent:
         return l_q
 
     def set_config(self, config):
+        """Set the configuration information of Agent.
+
+        :param config: The configuration information, including 11 configuration fields.
+        :return: None.
+        """
+
         self.__check_config(config)
         self.__config = config
 
