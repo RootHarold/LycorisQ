@@ -102,13 +102,27 @@ class Agent:
         self.__config = config
 
     def set_lr(self, learning_rate):
+        """Set the learning rate of the neural network.
+
+        :param learning_rate: The learning rate of the neural network.
+        :return: None.
+        """
+
         self.__lie.setLR(learning_rate)
 
     def set_workers(self, workers):
+        """Set the number of worker threads to train the model.
+
+        :param workers: The number of worker threads.
+        :return: None.
+        """
+
         self.__lie.setCpuCores(num=workers)
 
     @staticmethod
     def version():
+        """Returns the version information of Agent."""
+
         lycoris_version = Lycoris.version()
         return "LycorisQ 0.9.18-Beta By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
 
