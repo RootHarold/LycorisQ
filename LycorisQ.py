@@ -18,6 +18,12 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log
 
 class Agent:
     def __init__(self, config):
+        """Initialization
+
+        :param config: The configuration information, including 11 configuration fields. More details can be found in
+                       the relevant documentation.
+        """
+
         if config is not None:
             self.__check_config(config)
             self.__config = config
@@ -148,6 +154,12 @@ class Agent:
 
     @staticmethod
     def __check_config(config):
+        """Check whether the configuration information is valid.
+
+        :param config: The configuration information, including 11 configuration fields.
+        :return: None.
+        """
+
         keys = ["capacity", "state_dim", "action_dim", "nodes", "connections", "depths", "batch_size", "memory"]
         for item in keys:
             if item not in config:
