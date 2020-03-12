@@ -44,6 +44,11 @@ class Agent:
             self.__count = 0
 
     def train(self, data):
+        """Sampling data from the sample pool to train the neural network.
+
+        :param data: Each input data has 5 dimensions, which are action, reward, current_state, next_state, and done.
+        """
+
         if np.array(data).ndim == 1:
             data = [data]
 
