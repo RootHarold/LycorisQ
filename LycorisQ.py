@@ -47,6 +47,7 @@ class Agent:
         """Sampling data from the sample pool to train the neural network.
 
         :param data: Each input data has 5 dimensions, which are action, reward, current_state, next_state, and done.
+        :return: None.
         """
 
         if np.array(data).ndim == 1:
@@ -79,6 +80,12 @@ class Agent:
             logging.info("Epoch " + str(self.__count) + " : " + str(self.__lie.getLoss()))
 
     def evaluate(self, data):
+        """Input observation to evaluate the corresponding strategy.
+
+        :param data: Observation. Environmental information.
+        :return: The scores corresponding to the actions, in the form of a list.
+        """
+
         if np.array(data).ndim == 1:
             data = [data]
 
