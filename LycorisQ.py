@@ -17,6 +17,15 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log
 
 
 class Agent:
+    """A neat reinforcement learning framework based on LycorisNet.
+
+    Attributes:
+        __config: Store configuration information, including 11 configuration fields.
+        __lie: The neural network based on LycorisNet, which is the core of the AutoEncoder.
+        __memory: A sample pool implemented as a queue.
+        __count: The counter for controlling "enrich()" of LycorisNet.
+    """
+
     def __init__(self, config):
         """Initialization
 
