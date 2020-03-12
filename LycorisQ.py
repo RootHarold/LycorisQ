@@ -196,6 +196,8 @@ class Agent:
             config["gamma"] = 0.9
 
     def __process(self, data):
+        """The core module of DQN."""
+
         action = data[0]
         reward = data[1]
         current_state = data[2]
