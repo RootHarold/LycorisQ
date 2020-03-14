@@ -45,5 +45,10 @@ evolution| Number of LycorisNet evolutions. | 0
 verbose| Whether to output intermediate information. | False
 gamma | A parameter in Q-learning. | 0.9
 
+# Examples
+* [**CartPole**](https://github.com/RootHarold/LycorisQ/tree/master/Examples/CartPole)
+* [**MountainCar**](https://github.com/RootHarold/LycorisQ/tree/master/Examples/MountainCar)
+* *More examples will be released in the future.*
+
 # License
 LycorisQ is released under the [LGPL-3.0](https://github.com/RootHarold/LycorisQ/blob/master/LICENSE) license. By using, distributing, or contributing to this project, you agree to the terms and conditions of this license.
