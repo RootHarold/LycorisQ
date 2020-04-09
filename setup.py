@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='LycorisQ',
-    version='1.0.18',
+    version='1.1.18',
     description="A neat reinforcement learning framework based on LycorisNet.",
     author="RootHarold",
     author_email="rootharold@163.com",
