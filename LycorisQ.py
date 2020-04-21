@@ -168,7 +168,7 @@ class Agent:
         """Returns the version information of Agent."""
 
         lycoris_version = Lycoris.version()
-        return "LycorisQ 1.1.18 By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
+        return "LycorisQ 1.2.18 By RootHarold." + "\nPowered By " + lycoris_version[:-15] + "."
 
     @staticmethod
     def __check_config(config):
