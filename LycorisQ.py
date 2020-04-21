@@ -68,8 +68,12 @@ class Agent:
 
         if self.__count == self.__config["evolution"]:
             self.__lie.enrich()
+            self.__lie.fit(temp1, temp2)
+        elif self.__count < self.__config["evolution"]:
+            self.__lie.evolve(temp1, temp2)
+        else:
+            self.__lie.fit(temp1, temp2)
 
-        self.__lie.fit(temp1, temp2)
         self.__count = self.__count + 1
 
         if self.__config["verbose"]:
