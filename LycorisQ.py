@@ -38,7 +38,6 @@ class Agent:
             self.__config = config
             self.__lie = Lycoris(capacity=config["capacity"], inputDim=config["state_dim"],
                                  outputDim=config["action_dim"], mode="predict")
-            self.__lie.setMutateOdds(0)
             self.__lie.preheat(config["nodes"], config["connections"], config["depths"])
             self.__memory = deque(maxlen=config["memory"])
             self.__count = 0
@@ -120,8 +119,6 @@ class Agent:
         l_q = Agent(None)
         l_q.__count = 0
 
-        l_q.__lie = loadModel(path1, capacity=1)
-
         f = open(path2, 'r')
         json_info = f.read()
         f.close()
@@ -130,6 +127,8 @@ class Agent:
         l_q.__check_config(config)
         l_q.__config = config
         l_q.__memory = deque(maxlen=config["memory"])
+
+        l_q.__lie = loadModel(path1, capacity=config["capacity"])
 
         if l_q.__config["verbose"]:
             logging.info("Model imported successfully.")
