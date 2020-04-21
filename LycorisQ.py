@@ -123,8 +123,6 @@ class Agent:
         f.close()
 
         config = json.loads(json_info)
-        config["capacity"] = 1
-        config["evolution"] = 0
         l_q.__check_config(config)
         l_q.__config = config
         l_q.__memory = deque(maxlen=config["memory"])
