@@ -10,7 +10,7 @@ import gym
 import random
 import numpy as np
 
-config = {"capacity": 64, "state_dim": 4, "action_dim": 2, "nodes": 120, "connections": 3000, "depths": 6,
+config = {"capacity": 128, "state_dim": 4, "action_dim": 2, "nodes": 120, "connections": 3000, "depths": 6,
           "batch_size": 48, "memory": 10000, "evolution": 64}
 agent = Agent(config)
 
